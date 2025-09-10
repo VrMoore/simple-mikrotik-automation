@@ -12,18 +12,18 @@ class systemInfo() :
     """
     
     def __init__(self) :
+        self.resources_info()
+
+    def connect_to_ssh(self) :
         self.data = sshC.connect_router()
         self.ssh = paramiko.SSHClient()
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
-        self.resources_info()
-
-    def resources_info(self) :
-        
         self.ssh.connect(username=self.data[0], password=self.data[1], hostname=self.data[2], port=22)
 
-        stdin, stdout, stderr = self.ssh.exec_command("/system identity print")
+    def resources_info(self) :
+        self.connect_to_ssh()
 
+        stdin, stdout, stderr = self.ssh.exec_command("/system resource print")
         print(stdout.read().decode())
 
         self.ssh.close()

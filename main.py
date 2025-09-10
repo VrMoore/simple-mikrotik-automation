@@ -1,3 +1,6 @@
+from modules import hotspot as hotspotC
+from modules import system_info as systemC
+
 class Menu() :
 
     def __init__(self) :
@@ -28,13 +31,13 @@ class Menu() :
     def run_selected_opt(self, option : str) :
 
         if option == '1' :
-            print("You choose number 1")
+            run_hotspot = hotspotC.hotspotSetup()
         elif option == '2' :
             print("You choose number 2")
         elif option == '3' :
             print("You choose number 3")
         elif option == '9' :
-            print("You choose number 9")
+            run_system_info = systemC.systemInfo()
         else :
             print("Out")
 
