@@ -37,7 +37,7 @@ class Menu() :
         elif option == '3' :
             print("You choose number 3")
         elif option == '9' :
-            run_system_info = systemC.systemInfo()
+            run_system_info = systemC.systemMenu()
         else :
             print("Out")
 
@@ -45,21 +45,3 @@ class Menu() :
 if __name__ == "__main__" :
     run_menu = Menu()
     run_menu.main_menu()
-
-# Create SSH Client
-# ssh = paramiko.SSHClient()
-# ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
-# try:
-#     ssh.connect(ip_host, username=username, password=password)
-
-#     # Example: get system identity
-#     stdin, stdout, stderr = ssh.exec_command("/system identity print")
-
-#     stdin, stdout, stderr = ssh.exec_command("/ip address print")
-#     print(stdout.read().decode())
-
-# except Exception as e:
-#     print("Error:", e)
-# finally:
-#     ssh.close()
