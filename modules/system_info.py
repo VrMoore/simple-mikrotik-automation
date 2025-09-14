@@ -73,6 +73,12 @@ class systemInfo() :
     """
     
     def __init__(self) -> None :
+        """
+            initiation of object
+
+            Define winbox system command.
+        """
+
         self.system_info_command_list : dict = {
             "1" : "/syste resource print",
             "2" : "/system history print",
@@ -88,6 +94,13 @@ class systemInfo() :
             Handle ssh connection to Mikrotik Router Board.
 
             Use ip address that is connected to the ISP. Marked by 'D' in ip address list.
+
+            Parameters
+            ----------
+
+            Returns
+            -------
+            None
         """
 
         self.data = sshC.connect_router()
@@ -97,8 +110,22 @@ class systemInfo() :
 
         return None
 
-    def system_command(self, user_opt : str) :
-        
+    def system_command(self, user_opt : str) -> None :
+        """
+            Run system command
+
+            Use command that is already defined, and run the command through SSH
+
+            Parameters
+            ----------
+            user_opt : str
+                user choosed option in option list
+
+            Returns
+            -------
+            None
+        """
+
         self.connect_to_ssh()
 
         command = self.system_info_command_list[user_opt]
@@ -110,3 +137,5 @@ class systemInfo() :
         """)
 
         self.ssh.close()
+
+        return None
