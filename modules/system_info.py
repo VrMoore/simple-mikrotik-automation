@@ -34,6 +34,8 @@ class systemMenu() :
                 3. Clock
                 4. Router Board
                 5. Package List
+                6. Default Config
+                7. Log
         ----------------------------------
         """)
         
@@ -56,20 +58,12 @@ class systemMenu() :
             None
         """
         
-        if user_opt == "1" :
-            self.system_info.resources_info()
-        elif user_opt == "2" :
-            self.system_info.system_history_info()
-        elif user_opt == "3" :
-            self.system_info.system_clock_info()
-        elif user_opt == "4" :
-            self.system_info.system_router_board_info()
-        elif user_opt == "5" :
-            self.system_info.system_package_list_info()
+        if user_opt in ["1","2","3","4","5","6","7"] :
+            self.system_info.system_command(user_opt=user_opt)
         else :
-            print("EXIT")
+            print('Exit')
 
-        return 
+        return None
 
 class systemInfo() :
     """
@@ -79,10 +73,15 @@ class systemInfo() :
     """
     
     def __init__(self) -> None :
-        """
-            Initiation of object
-        """
-        pass
+        self.system_info_command_list : dict = {
+            "1" : "/syste resource print",
+            "2" : "/system history print",
+            "3" : "/system clock print",
+            "4" : "/system routerboard print",
+            "5" : "/system package print",
+            "6" : "/system default-configuration print",
+            "7" : "/log print"
+        }
 
     def connect_to_ssh(self) -> None :
         """
@@ -98,59 +97,16 @@ class systemInfo() :
 
         return None
 
-    def resources_info(self) -> None :
+    def system_command(self, user_opt : str) :
+        
         self.connect_to_ssh()
 
-        stdin, stdout, stderr = self.ssh.exec_command("/system resource print")
-        print(stdout.read().decode())
+        command = self.system_info_command_list[user_opt]
+
+        stdin, stdout, stderr = self.ssh.exec_command(command)
+
+        print(f"""
+            {stdout.read().decode()}
+        """)
 
         self.ssh.close()
-
-        return None
-
-    def system_history_info(self) -> None :
-        self.connect_to_ssh()
-
-        stdin, stdout, stderr = self.ssh.exec_command("/system history print")
-        print(stdout.read().decode())
-
-        self.ssh.close()
-
-        return None
-
-    def system_clock_info(self) -> None :
-        self.connect_to_ssh()
-
-        stdin, stdout, stderr = self.ssh.exec_command("/system clock print")
-        print(stdout.read().decode())
-
-        self.ssh.close()
-
-        return None
-
-    def system_router_board_info(self) -> None:
-        self.connect_to_ssh()
-
-        stdin, stdout, stderr = self.ssh.exec_command("/system routerboard print")
-        print(stdout.read().decode())
-
-        self.ssh.close()
-
-        return None
-
-    def system_package_list_info(self) -> None :
-        self.connect_to_ssh()
-
-        stdin, stdout, stderr = self.ssh.exec_command("/system package print")
-        print(stdout.read().decode())
-
-        self.ssh.close()
-
-        return None
-
-
-# Make a dictionary that list of all selected command
-
-# data = {
-#     1 : 'sy'
-# }
