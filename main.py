@@ -1,47 +1,44 @@
-from modules import hotspot as hotspotC
-from modules import system_info as systemC
+import paramiko
+import os
+from modules import file_uploader as fupr
 
-class Menu() :
+class mainMenu :
 
-    def __init__(self) :
-        pass
-
-    def main_menu(self) :
-        
+    def __init__(self) -> None :
         print(f"""
-            \n 
-            ================================================
+            {'='*20}
 
-                WELCOME TO MIKROTIK AUTOMATION
+            Welcome to Mikrotik Automation.
+            Please select your option.
 
-                Choose option :
-                    1. Hotspot Setup
-                    2. Blocking Website
-                    3. Blocking Time
-                       ....
-                    9. System Info
+            1. Basic Hotspot
+            2. Block Website
+            3. SNMP
 
-            ================================================
-            \n
+            {'='*20}
+
         """)
 
-        ask_user = input("Option : ")
-        self.run_selected_opt(option=ask_user)
+        ask_user : str = input('Opt : ')
+        self.run_selected_opt(usr_opt = ask_user)
 
-    def run_selected_opt(self, option : str) :
+    def run_selected_opt(self, usr_opt : str) :
+        curr_dir = os.getcwd()
 
-        if option == '1' :
-            run_hotspot = hotspotC.hotspotSetup()
-        elif option == '2' :
-            print("You choose number 2")
-        elif option == '3' :
-            print("You choose number 3")
-        elif option == '9' :
-            run_system_info = systemC.systemMenu()
+        if usr_opt == "1" :
+            local_path = os.path.join(curr_dir,"scripts","basic_hotspot.rsc")
+            fupr.upload(local_path)
+        elif usr_opt == "2" :
+            local_path = os.path.join(curr_dir,"scripts","block_site.rsc")
+            fupr.upload(local_path)
+        elif usr_opt == "3" :
+            local_path = os.path.join(curr_dir,"scripts","simple_snmp.rsc")
+            fupr.upload(local_path)
         else :
-            print("Out")
+            print("Wrong input")
 
+        
 
 if __name__ == "__main__" :
-    run_menu = Menu()
-    run_menu.main_menu()
+
+    run_menu = mainMenu()
