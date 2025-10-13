@@ -18,6 +18,7 @@ def upload(files : str) :
         sftp.put(localpath=files, remotepath=remote_file_name)
 
         stdin, stdout, stderr = ssh.exec_command(f'/import file-name="{remote_file_name}"')
+        
         print(stdout.read().decode())
         print(stderr.read().decode())
 
