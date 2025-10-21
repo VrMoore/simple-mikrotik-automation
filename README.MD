@@ -9,9 +9,15 @@ First, install paramiko library with following command :
 
 ## How to run the program
 
-1. Type `ip address print` in the winbox terminal
+1. Create virtual environment in python
+`python -m venv myenv`
 
-2. Run the program, on the `ip address` question, enter the one that you see with the letter <b>D</b> (Dynamic).
+2. Install requirements
+`python -m pip install -r requirements.txt`
+
+3. Type `ip address print` in the winbox terminal
+
+4. Run the program, on the `ip address` question, enter the one that you see with the letter <b>D</b> (Dynamic).
 
 ## Foot note
 This code is tested in :
