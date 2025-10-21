@@ -2,8 +2,8 @@ import paramiko
 
 def connect_router() -> list[str] :
 
-    username : str = input("Login    : ")
-    password : str = input("Password : ")
-    host_ip  : str = input("Host IP  : ")
+    username : str = "admin"
+    password : str = ""
+    host_ip  : str = "10.10.10.1"
 
     return [username, password, host_ip]
