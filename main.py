@@ -39,28 +39,16 @@ class mainMenu :
             "9" : "backup_point.rsc"
         }
 
-                
+        # Handle user option
+        if usr_opt in script_file:
+            local_path = os.path.join(curr_dir, "scripts", script_file[usr_opt])
 
-        if usr_opt == "1" :
-            local_path = os.path.join(curr_dir,"scripts","basic_client_lan.rsc")
+            if usr_opt == "3":
+                ipLoo.run_bash()
+
             fupr.upload(local_path)
-        elif usr_opt == "2" :
-            local_path = os.path.join(curr_dir,"scripts","basic_hotspot.rsc")
-            fupr.upload(local_path)
-        elif usr_opt == "3" :
-            local_path = os.path.join(curr_dir,"scripts","block_site.rsc")
-            ipLoo.run_bash()
-            fupr.upload(local_path)
-        elif usr_opt == "4" :
-            local_path = os.path.join(curr_dir,"scripts","simple_snmp.rsc")
-            fupr.upload(local_path)
-        elif usr_opt == "8" :
-            local_path = os.path.join(curr_dir,"scripts","banner.rsc")
-            fupr.upload(local_path)
-        elif usr_opt == "9" :
-            local_path = os.path.join(curr_dir,"scripts","backup_point.rsc")
-            fupr.upload(local_path)
-        else :
+
+        else:
             print("Wrong input")
 
         

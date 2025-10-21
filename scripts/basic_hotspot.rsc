@@ -5,6 +5,7 @@
 :global hotspotDNS "bananasliced80.co.id"
 :global hotspotLoginUser "user"
 :global hotspotLoginPass "user"
+:global userHotspotLimit 10
 
 # wireless
 interface wireless enable wlan1 
@@ -25,7 +26,7 @@ ip hotspot profile add name=hsprof1 hotspot-address=($ipAddr . ".1") dns-name=$h
 ip hotspot add name=server1 profile=hsprof1 interface=wlan1 address-pool=hs-pool-1 disabled=no
 
 # Create user
-ip hotspot user profile add name=uprof1 shared-users=10
+ip hotspot user profile add name=uprof1 shared-users=$userHotspotLimit
 ip hotspot user add name=$hotspotLoginUser password=$hotspotLoginPass profile=uprof1 
 
 put "Hotspot setup complete"
