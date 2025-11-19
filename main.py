@@ -1,13 +1,28 @@
-import paramiko
 import os
+
+import paramiko
+
 from modules import file_uploader as fupr
 from modules import ip_lookup as ipLoo
 
-class mainMenu :
 
-    def __init__(self) -> None :
+class mainMenu:
+    """
+    MainMenu for Mikrotik Apps
+    """
+
+    def __init__(self) -> None:
+        """
+        Basic option for mikrotik applications.
+
+        Parameter :
+        -----------
+        None
+
+        Return : None
+        """
         print(f"""
-            {'='*20}
+            {"=" * 20}
 
             Welcome to Mikrotik Automation.
             Please select your option.
@@ -20,24 +35,45 @@ class mainMenu :
             8. Banner
             9. Backup
 
-            {'='*20}
+            {"=" * 20}
 
         """)
 
-        ask_user : str = input('Opt : ')
-        self.run_selected_opt(usr_opt = ask_user)
+        ask_user: str = input("Opt : ")
+        self.run_selected_opt(usr_opt=ask_user)
 
-    def run_selected_opt(self, usr_opt : str) :
+    def run_selected_opt(self, usr_opt: str) -> None:
+        """
+        Run selected user option.
+
+        Automatically send banner once if already banner in mikrotik. Banner is custom made by me, you can customize it by yourself.
+
+        Parameter :
+        ----------
+        usr_opt : str
+            Input from self.innit
+
+        Return : None
+        """
+
+        # Get current working directory
         curr_dir = os.getcwd()
 
-        script_file : dict = {
-            "1" : "basic_client_lan.rsc",
-            "2" : "basic_hotspot.rsc",
-            "3" : "block_site.rsc",
-            "4" : "simple_snmp",
-            "8" : "banner.rsc",
-            "9" : "backup_point.rsc"
+        # List name of file for easier file execution
+        script_file: dict = {
+            "1": "basic_client_lan.rsc",
+            "2": "basic_hotspot.rsc",
+            "3": "block_site.rsc",
+            "4": "simple_snmp",
+            "9": "backup_point.rsc",
         }
+
+        banner_file = "banner.rsc"
+
+        # Check file in mikrotik
+        file_tool = fupr.Check()
+        check_exist = file_tool.check_remote(banner_file)
+        # print(check_exist)
 
         # Handle user option
         if usr_opt in script_file:
@@ -46,13 +82,11 @@ class mainMenu :
             if usr_opt == "3":
                 ipLoo.run_bash()
 
-            fupr.upload(local_path)
+            file_tool.upload(file_name=local_path)
 
         else:
             print("Wrong input")
 
-        
 
-if __name__ == "__main__" :
-
+if __name__ == "__main__":
     run_menu = mainMenu()
