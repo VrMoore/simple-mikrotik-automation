@@ -1,4 +1,5 @@
 import os
+from unittest.main import TestProgram
 
 import paramiko
 
@@ -15,12 +16,12 @@ class mainMenu:
         """
         Basic option for mikrotik applications.
 
-        Parameter :
-        -----------
-        None
-
+        Parameter : None
         Return : None
         """
+
+        self.file_tool = fupr.Check()
+
         print(f"""
             {"=" * 20}
 
@@ -50,8 +51,8 @@ class mainMenu:
 
         Parameter :
         ----------
-        usr_opt : str
-            Input from self.innit
+            usr_opt : str
+                Input from self.innit
 
         Return : None
         """
@@ -63,26 +64,26 @@ class mainMenu:
         script_file: dict = {
             "1": "basic_client_lan.rsc",
             "2": "basic_hotspot.rsc",
-            "3": "block_site.rsc",
+            # "3": "block_site.rsc",
             "4": "simple_snmp",
             "9": "backup_point.rsc",
         }
 
         banner_file = "banner.rsc"
-
         # Check file in mikrotik
-        file_tool = fupr.Check()
-        check_exist = file_tool.check_remote(banner_file)
-        # print(check_exist)
+        check_exist = self.file_tool.check_remote(banner_file)
+        print("===", check_exist, "===")
 
         # Handle user option
         if usr_opt in script_file:
             local_path = os.path.join(curr_dir, "scripts", script_file[usr_opt])
+            test_path = f"{local_path}.rsc"
+            print(test_path)
 
-            if usr_opt == "3":
+            if usr_opt == "4":
                 ipLoo.run_bash()
 
-            file_tool.upload(file_name=local_path)
+            self.file_tool.upload(file_name=test_path)
 
         else:
             print("Wrong input")
