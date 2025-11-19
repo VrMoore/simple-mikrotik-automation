@@ -1,7 +1,4 @@
 import os
-from unittest.main import TestProgram
-
-import paramiko
 
 from modules import file_uploader as fupr
 from modules import ip_lookup as ipLoo
@@ -19,8 +16,6 @@ class mainMenu:
         Parameter : None
         Return : None
         """
-
-        self.file_tool = fupr.Check()
 
         print(f"""
             {"=" * 20}
@@ -64,26 +59,31 @@ class mainMenu:
         script_file: dict = {
             "1": "basic_client_lan.rsc",
             "2": "basic_hotspot.rsc",
-            # "3": "block_site.rsc",
-            "4": "simple_snmp",
+            "3": "block_site.rsc",
+            "4": "simple_snmp.rsc",
+            "8": "banner.rsc",
             "9": "backup_point.rsc",
         }
 
         banner_file = "banner.rsc"
         # Check file in mikrotik
-        check_exist = self.file_tool.check_remote(banner_file)
-        print("===", check_exist, "===")
+
+        file_tool = fupr.Check()
+        do_exist = file_tool.check_remote(banner_file)
+        print(do_exist)
+
+        if do_exist is False:
+            file_tool.upload(file_name="banner.rsc")
+            print("Send banner")
 
         # Handle user option
         if usr_opt in script_file:
             local_path = os.path.join(curr_dir, "scripts", script_file[usr_opt])
-            test_path = f"{local_path}.rsc"
-            print(test_path)
 
-            if usr_opt == "4":
+            if usr_opt == "3":
                 ipLoo.run_bash()
 
-            self.file_tool.upload(file_name=test_path)
+            file_tool.upload(file_name=local_path)
 
         else:
             print("Wrong input")

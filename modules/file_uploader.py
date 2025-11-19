@@ -4,33 +4,6 @@ import paramiko
 
 from modules import ssh_connection as sshC
 
-# def upload(files : str) :
-
-#     data = sshC.connect_router()
-
-#     self.ssh = paramiko.SSHClient()
-#     ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
-#     try :
-#         ssh.connect(username=data[0], password=data[1], hostname=data[2], port=22)
-#         remote_path = files.replace("\\","/")
-#         remote_file_name = os.path.basename(remote_path)
-
-#         sftp = self.ssh.open_sftp()
-#         sftp.put(localpath=files, remotepath=remote_file_name)
-
-#         stdin, stdout, stderr = self.ssh.exec_command(f'/import file-name="{remote_file_name}"')
-
-#         print(stdout.read().decode())
-#         print(stderr.read().decode())
-
-#     except Exception as e :
-#         print("Error : ", e)
-
-#     finally :
-#         sftp.close()
-#         ssh.close()
-
 
 class Check:
     def __init__(self) -> None:
@@ -41,11 +14,8 @@ class Check:
         self.ssh = paramiko.SSHClient()
 
         self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        self.ssh.connect(
-            username=self.data[0], password=self.data[1], hostname=self.data[2], port=22
-        )
 
-    def connectSftp(self, files: str) -> None:
+    def connectSftp(self, files: str):
         """
         Connect and execute file.
 
@@ -59,6 +29,13 @@ class Check:
         Return : None
         """
         try:
+            self.ssh.connect(
+                username=self.data[0],
+                password=self.data[1],
+                hostname=self.data[2],
+                port=22,
+            )
+
             remote_path = files.replace("\\", "/")
             remote_file_name = os.path.basename(remote_path)
 
@@ -78,7 +55,7 @@ class Check:
         finally:
             self.ssh.close()
 
-    def upload(self, file_name: str) -> None:
+    def upload(self, file_name: str):
         """
         Upload file to mikrotik
 
@@ -93,7 +70,7 @@ class Check:
         """
         self.connectSftp(files=file_name)
 
-    def check_remote(self, remote_file_name: str) -> None:
+    def check_remote(self, remote_file_name: str):
         """
         Check file in mikrotik folders.
 
@@ -107,12 +84,26 @@ class Check:
         Return : None
         """
         try:
-            stdin, stdout, stderr = self.ssh.exec_command("/file print")
+            self.ssh.connect(
+                username=self.data[0],
+                password=self.data[1],
+                hostname=self.data[2],
+                port=22,
+            )
 
-            print(stdout.read().decode())
-            print(stderr.read().decode())
+            sftp = self.ssh.open_sftp()
 
-        except Exception as e:
+            file_list = sftp.listdir()  # returns list of filenames
+            sftp.close()
+
+            return remote_file_name in file_list
+
+            # stdin, stdout, stderr = self.ssh.exec_command("/file print")
+
+            # print(stdout.read().decode())
+            # print(stderr.read().decode())
+
+        except WindowsError as e:
             print("Error : ", e)
 
         finally:

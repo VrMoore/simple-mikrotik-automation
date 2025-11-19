@@ -1,3 +1,16 @@
 
 ip firewall address-list add list=BlockedWebsites address=157.240.208.35 comment="www.facebook.com"
+ip firewall address-list add list=BlockedWebsites address=192.52.178.30 comment="www.facebook.com"
+ip firewall address-list add list=BlockedWebsites address=192.12.94.30 comment="www.facebook.com"
+ip firewall address-list add list=BlockedWebsites address=192.33.14.30 comment="www.facebook.com"
+ip firewall address-list add list=BlockedWebsites address=192.42.93.30 comment="www.facebook.com"
+ip firewall address-list add list=BlockedWebsites address=192.41.162.30 comment="www.facebook.com"
+ip firewall address-list add list=BlockedWebsites address=192.5.6.30 comment="www.facebook.com"
+ip firewall address-list add list=BlockedWebsites address=192.31.80.30 comment="www.facebook.com"
+ip firewall address-list add list=BlockedWebsites address=192.43.172.30 comment="www.facebook.com"
+ip firewall address-list add list=BlockedWebsites address=192.55.83.30 comment="www.facebook.com"
+ip firewall address-list add list=BlockedWebsites address=192.26.92.30 comment="www.facebook.com"
+ip firewall address-list add list=BlockedWebsites address=192.35.51.30 comment="www.facebook.com"
+ip firewall address-list add list=BlockedWebsites address=192.54.112.30 comment="www.facebook.com"
+ip firewall address-list add list=BlockedWebsites address=192.48.79.30 comment="www.facebook.com"
 ip firewall filter add chain=forward dst-address-list=BlockedWebsites action=drop
